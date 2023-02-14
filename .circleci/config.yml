@@ -34,7 +34,7 @@ jobs:
   # Exercise: Reusable Job Code 
   print_greetings:
     docker:
-      - image: cimg/node:19.5.0
+      - image: circleci/node:13.8.0
     steps:
       - print_pipeline_id:
           id: << pipeline.id >>
@@ -45,7 +45,7 @@ jobs:
   # Exercise: Sharing Files (Job names may have changed)
   upload_file:
     docker:
-      - image: cimg/node:19.5.0
+      - image: circleci/node:13.8.0
     steps:
       - run: echo "THIS IS A SAMPLE TEXT" > ~/output.txt  
       - persist_to_workspace:
@@ -55,7 +55,7 @@ jobs:
 
   download_file:
     docker:
-      - image: cimg/node:19.5.0
+      - image: circleci/node:13.8.0
     steps:
       - attach_workspace:
           at: ~/
@@ -73,7 +73,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file template.yml \
-              --stack-name infrastuctureStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-east-1
       # Fail the job intentionally to simulate an error.
       # Uncomment the line below if you want to fail the current step
@@ -125,11 +125,10 @@ jobs:
   # Note that the `--parameter-overrides` let you specify a value that override parameter value in the cloudfront.yml template file.
   # We are assuming that the `PipelineID` parameter represents the bucket ID. 
 
-   aws cloudformation deploy \
-   --template-file cloudfront.yml \
-   --stack-name production-distro \
-   --parameter-overrides PipelineID="myurl
-   \myurl # Name of the S3 bucket you created manually.
+  # aws cloudformation deploy \
+  # --template-file cloudfront.yml \
+  # --stack-name production-distro \
+  # --parameter-overrides PipelineID="mybucket644752792305" \ # Name of the S3 bucket you created manually.
   
   # Job 1
   # Executes the bucket.yml - Deploy an S3 bucket, and interface with that bucket to synchronize the files between local and the bucket.
