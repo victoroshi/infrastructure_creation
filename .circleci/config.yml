@@ -47,7 +47,6 @@ jobs:
       # Uncomment the line below if you want to fail the current step
       - run: return 1
       - destroy_environment
-        when: on_fail
       
   # Exercise: Config and Deployment
   configure_infrastructure: 
