@@ -45,8 +45,9 @@ jobs:
               --region us-east-1
       # Fail the job intentionally to simulate an error.
       # Uncomment the line below if you want to fail the current step
-      # - run: return 1
+      - run: return 1
       - destroy_environment
+        when: on_fail
       
   # Exercise: Config and Deployment
   configure_infrastructure: 
@@ -79,9 +80,9 @@ jobs:
             # Test if website exists
             if curl -s --head ${URL} 
             then
-              return 1
-            else
               return 0
+            else
+              return 1
             fi
       - destroy_environment      
 
