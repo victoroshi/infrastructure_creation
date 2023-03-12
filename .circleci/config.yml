@@ -79,9 +79,9 @@ jobs:
             # Test if website exists
             if curl -s --head ${URL} 
             then
-              return 1
-            else
               return 0
+            else
+              return 1
             fi
       - destroy_environment      
 
